@@ -1,6 +1,7 @@
 /*
  * react - watch a file, when it changes, react.
  * ben lemasurier 2k12
+ * https://github.com/benlemasurier/react
  *
  * license: free as in give me credit. beer is cool too.
  *
@@ -70,7 +71,7 @@ watch(void)
   struct timeval time;
   fd_set fds;
 
-  /* timeout every 5 minutes */
+  /* timeout every 5 minutes (for fun.) */
   time.tv_sec  = 300;
   time.tv_usec = 0;
 
@@ -92,6 +93,7 @@ watch(void)
       i += (EVENT_SIZE + e->len);
     }
 
+    fprintf(stderr, "%s changed, calling %s\n", react.file, react.command);
     system(react.command);
   }
 }
@@ -101,6 +103,13 @@ usage(void)
 {
   printf("%s [-fv] <file to watch> <command>", react.progname);
   exit(EXIT_SUCCESS);
+}
+
+static void
+version(void)
+{
+  printf("react %d.%d\n",
+      REACT_VERSION_MAJOR, REACT_VERSION_MINOR);
 }
 
 int
@@ -119,14 +128,17 @@ main(int argc, char **argv)
   atexit(quit);
   signal(SIGINT, sigquit);
 
-  while((arg = getopt(argc, argv, "fv")) != -1) {
+  while((arg = getopt(argc, argv, "dfv")) != -1) {
     switch(arg) {
-      case 'v':
+      case 'd':
         react.logging |= LOG_PERROR;
         break;
       case 'f':
         react.foreground = true;
         break;
+      case 'v':
+        version();
+        exit(EXIT_SUCCESS);
       case '?':
         if(optopt == 'h')
           fprintf(stderr, "Option -%c requires an argument.\n", optopt);

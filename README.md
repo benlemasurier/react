@@ -7,8 +7,9 @@ usage
 =====
     ./react [-fv] <file to watch> <command to run>
     
+      -d  debug mode (verbose syslog output)
       -f  run in foreground
-      -v  verbose logging
+      -v  show version
 
 
 example
@@ -31,6 +32,8 @@ installing
 todo
 ====
 
-* currently we're only watching file content modifications, handle other types as well (open, close, attr move, delete)
-* what do if file moves? keep watching? exit? probably an option for either.
+ordered loosely by priority
 
+* currently we're only watching file content modifications, handle other types as well (open, close, attr move, delete)
+* what do when file moves? keep watching? exit? probably an option for either.
+* OSX support (kqueue?, kevent?)
