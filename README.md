@@ -10,6 +10,14 @@ usage
       -f  run in foreground
       -v  verbose logging
 
+
+example
+=======
+
+working with LESS files:
+
+    react ./less/bootstrap.less "lessc ./less/bootstrap.less > bootstrap.css"
+
 todo
 ====
 
