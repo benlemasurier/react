@@ -25,7 +25,7 @@ installing
     git clone git clone git://github.com/benlemasurier/react.git
     cd react
     cmake .
-    make install
+    sudo make install
 
 todo
 ====
