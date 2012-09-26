@@ -18,6 +18,15 @@ working with LESS files:
 
     react ./less/bootstrap.less "lessc ./less/bootstrap.less > bootstrap.css"
 
+
+installing
+==========
+
+    git clone git clone git://github.com/benlemasurier/react.git
+    cd react
+    cmake .
+    make install
+
 todo
 ====
 
