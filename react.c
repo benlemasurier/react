@@ -2,12 +2,15 @@
  * react - watch a file, when it changes, react.
  * ben lemasurier 2k12
  *
+ * license: free as in give me credit. beer is cool too.
+ *
  */
 
 #define _GNU_SOURCE
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 #include <unistd.h>
 #include <sys/inotify.h>
@@ -21,6 +24,8 @@
 struct react {
   int fd;
   int wd;
+  char *file;
+  char *command;
 } react;
 
 void
@@ -38,8 +43,6 @@ quit(void)
 
   if(react.fd)
     close(react.fd);
-
-  printf("quit\n");
 }
 
 void
@@ -66,7 +69,6 @@ watch(void)
   if(ret < 0)
     fail("select");
   else if(FD_ISSET(react.fd, &fds)) {
-    printf("got a modification.\n");
     int i = 0;
     int length = 0;
 
@@ -78,21 +80,38 @@ watch(void)
 
       i += (EVENT_SIZE + e->len);
     }
+
+    system(react.command);
   }
+}
+
+static void
+usage(void)
+{
+  printf("react <file to watch> <command to run>");
+  exit(EXIT_SUCCESS);
 }
 
 int
 main(int argc, char **argv)
 {
+  memset(&react, 0, sizeof(struct react));
+
+  /* quit cleanly */
   atexit(quit);
   signal(SIGINT, sigquit);
+
+  /* command-line options */
+  if(argc < 3) usage();
+  react.file    = argv[1];
+  react.command = argv[2];
 
   /* initialize inotify */
   if((react.fd = inotify_init()) < 0)
     fail("inotify_init");
 
-  if((react.wd = inotify_add_watch(react.fd, "./test.txt", IN_MODIFY)) < 0)
-    fail("./test.txt");
+  if((react.wd = inotify_add_watch(react.fd, react.file, IN_MODIFY)) < 0)
+    fail(react.file);
 
   while(1)
     watch();
