@@ -8,7 +8,7 @@ usage
 ./react <file to watch> <command to run>
 
 
-TODO
+todo
 ====
 
 * currently we're only watching file content modifications, handle other types as well (open, close, attr move, delete)
