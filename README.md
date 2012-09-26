@@ -14,7 +14,8 @@ usage
 example
 =======
 
-working with LESS files:
+working with bootstrap's LESS files, it's a pain to recompile/test/modify/repeat.
+lets auto recompile on save:
 
     react ./less/bootstrap.less "lessc ./less/bootstrap.less > bootstrap.css"
 
