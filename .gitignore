@@ -1,3 +1,6 @@
+react
+*.swp
+
 CMakeCache.txt
 CMakeFiles
 Makefile
