@@ -5,10 +5,10 @@ watch a file, when it changes, react.
 
 usage
 =====
-./react [-fv] <file to watch> <command to run>
-
-  -f  run in foreground
-  -v  verbose logging
+    ./react [-fv] <file to watch> <command to run>
+    
+      -f  run in foreground
+      -v  verbose logging
 
 todo
 ====
