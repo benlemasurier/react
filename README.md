@@ -5,7 +5,7 @@ watch a file, when it changes, react.
 
 usage
 =====
-    ./react [-fv] <file to watch> <command to run>
+    ./react [-dfv] <file to watch> <command to run>
     
       -d  debug mode (verbose syslog output)
       -f  run in foreground
