@@ -16,3 +16,5 @@ configure_file (
 include_directories("${PROJECT_BINARY_DIR}")
 
 add_executable (react react.c)
+
+install_targets(/bin react)
