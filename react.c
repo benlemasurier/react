@@ -34,6 +34,7 @@ struct react {
   char *file;
   char *command;
   char *progname;
+  bool debug;
   bool foreground;
 } react;
 
@@ -93,7 +94,9 @@ watch(void)
       i += (EVENT_SIZE + e->len);
     }
 
-    fprintf(stderr, "%s changed, calling %s\n", react.file, react.command);
+    if(react.debug)
+      syslog(LOG_NOTICE, "%s changed, calling %s\n", react.file, react.command);
+
     system(react.command);
   }
 }
@@ -131,6 +134,7 @@ main(int argc, char **argv)
   while((arg = getopt(argc, argv, "dfv")) != -1) {
     switch(arg) {
       case 'd':
+        react.debug = true;
         react.logging |= LOG_PERROR;
         break;
       case 'f':
