@@ -34,6 +34,8 @@ todo
 
 ordered loosely by priority
 
+* root is scary, let them know.
+* watch directories, of course.
 * currently we're only watching file content modifications, handle other types as well (open, close, attr move, delete)
 * what do when file moves? keep watching? exit? probably an option for either.
 * OSX support (kqueue?, kevent?)
