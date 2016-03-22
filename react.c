@@ -99,7 +99,7 @@ void watch(void)
 
 static void usage(void)
 {
-	printf("%s [-fv] <file to watch> <command>", react.progname);
+	printf("%s [-fv] <file to watch> <command>\n", react.progname);
 	exit(EXIT_SUCCESS);
 }
 
