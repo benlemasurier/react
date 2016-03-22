@@ -105,8 +105,8 @@ static void usage(void)
 
 static void version(void)
 {
-	printf("react %d.%d\n",
-			REACT_VERSION_MAJOR, REACT_VERSION_MINOR);
+	printf("react %d.%d.%d\n",
+			REACT_VERSION_MAJOR, REACT_VERSION_MINOR, REACT_VERSION_MICRO);
 }
 
 int main(int argc, char **argv)

@@ -7,6 +7,7 @@ add_definitions(-std=c99 -Wall -pedantic)
 # version
 set (REACT_VERSION_MAJOR 0)
 set (REACT_VERSION_MINOR 1)
+set (REACT_VERSION_MICRO 1)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/config.h.in"
