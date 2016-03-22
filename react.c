@@ -28,7 +28,7 @@
 #define EVENT_BUF_LEN (1024 * (EVENT_SIZE + 16))
 
 struct react {
-	int fd;
+	int inotify_fd;
 	int wd;
 	int logging;
 	char *file;
@@ -47,10 +47,10 @@ void fail(const char *on)
 void quit(void)
 {
 	if(react.wd)
-		inotify_rm_watch(react.fd, react.wd);
+		inotify_rm_watch(react.inotify_fd, react.wd);
 
-	if(react.fd)
-		close(react.fd);
+	if(react.inotify_fd)
+		close(react.inotify_fd);
 
 	syslog(LOG_NOTICE, "shutting down");
 	closelog();
@@ -73,15 +73,15 @@ void watch(void)
 	time.tv_usec = 0;
 
 	FD_ZERO(&fds);
-	FD_SET(react.fd, &fds);
-	ret = select(react.fd + 1, &fds, NULL, NULL, &time);
-	if(ret < 0)
+	FD_SET(react.inotify_fd, &fds);
+	ret = select(react.inotify_fd + 1, &fds, NULL, NULL, &time);
+	if(ret < 0) {
 		fail("select");
-	else if(FD_ISSET(react.fd, &fds)) {
+	} else if(FD_ISSET(react.inotify_fd, &fds)) {
 		int i = 0;
 		int length = 0;
 
-		if((length = read(react.fd, buf, EVENT_BUF_LEN)) < 0)
+		if((length = read(react.inotify_fd, buf, EVENT_BUF_LEN)) < 0)
 			fail("read");
 
 		while(i < length) {
@@ -169,10 +169,10 @@ int main(int argc, char **argv)
 	}
 
 	/* initialize inotify */
-	if((react.fd = inotify_init()) < 0)
+	if((react.inotify_fd = inotify_init()) < 0)
 		fail("inotify_init");
 
-	if((react.wd = inotify_add_watch(react.fd, react.file, IN_MODIFY)) < 0)
+	if((react.wd = inotify_add_watch(react.inotify_fd, react.file, IN_MODIFY)) < 0)
 		fail(react.file);
 
 	while(1)
